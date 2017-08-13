@@ -17,7 +17,7 @@ class ApiRequestor(object):
     def __init__(self, token=None, api_base=None, api_version=None):
         self.api_base = api_base or samplify.api_base
         self.api_version = api_version or samplify.api_version
-        self.token = token
+        self.token = token or samplify.token
 
     def get_api_base(self):
         return '%s/%s' % (self.api_base, self.api_version)

@@ -1,4 +1,4 @@
-import urllib
+import urllib, json
 from samplify import api_requestor
 
 
@@ -11,7 +11,7 @@ class SamplifyResource(object):
     def get_object_url(cls):
         if cls == SamplifyResource:
             raise NotImplementedError('SamplifyResource is an abstract class.')
-        return str(urllib.quote_plus(cls.__name__.lower()))
+        return '/%s/' % str(urllib.quote_plus(cls.__name__.lower()))
 
     @classmethod
     def post(cls, data, token=None):
@@ -23,8 +23,8 @@ class CreateableResource(SamplifyResource):
     @classmethod
     def create(cls, data, token=None):
         requestor = api_requestor.ApiRequestor(token=token)
-        return requestor.post(cls.get_object_url(), data)
+        return json.loads(requestor.post(cls.get_object_url(), data).content)
 
 
-class Publication(CreateableResource):
+class Publications(CreateableResource):
     pass
