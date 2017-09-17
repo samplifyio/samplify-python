@@ -1,5 +1,10 @@
-import urllib, json
+import urllib, json, re
 from samplify import api_requestor
+
+
+def camelcase_to_dashcase(name):
+    s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
+    return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()
 
 
 class SamplifyResource(object):
@@ -11,12 +16,7 @@ class SamplifyResource(object):
     def get_object_url(cls):
         if cls == SamplifyResource:
             raise NotImplementedError('SamplifyResource is an abstract class.')
-        return '/%s/' % str(urllib.quote_plus(cls.__name__.lower()))
-
-    @classmethod
-    def post(cls, data, token=None):
-        requestor = api_requestor.ApiRequestor(token=token)
-        return requestor.post(cls.get_object_url(), data)
+        return '/%s/' % str(urllib.quote_plus(camelcase_to_dashcase(cls.__name__)))
 
 
 class CreateableResource(SamplifyResource):
@@ -26,5 +26,38 @@ class CreateableResource(SamplifyResource):
         return json.loads(requestor.post(cls.get_object_url(), data).content)
 
 
-class Publications(CreateableResource):
+class RetrieveableResource(SamplifyResource):
+    @classmethod
+    def get(cls, oid, token=None):
+        url = "%s%s/" % (cls.get_object_url(), oid)
+        requestor = api_requestor.ApiRequestor(token=token)
+        return json.loads(requestor.get(url).content)
+
+
+class ListableResource(SamplifyResource):
+    @classmethod
+    def list(cls, token=None):
+        requestor = api_requestor.ApiRequestor(token=token)
+        return json.loads(requestor.get(cls.get_object_url()).content)
+
+
+class UpdateableResource(SamplifyResource):
+    @classmethod
+    def update(cls, oid, token=None, **params):
+        url = "%s%s/" % (cls.get_object_url(), oid)
+        requestor = api_requestor.ApiRequestor(token=token)
+        return json.loads(requestor.put(url, params).content)
+
+
+class Publications(CreateableResource,
+                   UpdateableResource,
+                   ListableResource,
+                   RetrieveableResource):
+    pass
+
+
+class SamWatchlists(CreateableResource,
+                    UpdateableResource,
+                    ListableResource,
+                    RetrieveableResource):
     pass

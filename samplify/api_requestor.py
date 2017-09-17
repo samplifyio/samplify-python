@@ -36,7 +36,16 @@ class ApiRequestor(object):
 
         return headers
 
+    def get(self, path):
+        return requests.get('%s%s' % (self.get_api_base(), path),
+                            headers=self.get_request_headers(self.token))
+
     def post(self, path, data=None):
         return requests.post('%s%s' % (self.get_api_base(), path),
                              json=data,
                              headers=self.get_request_headers(self.token))
+
+    def put(self, path, data=None):
+        return requests.put('%s%s' % (self.get_api_base(), path),
+                            json=data,
+                            headers=self.get_request_headers(self.token))
