@@ -56,6 +56,13 @@ class Publications(CreateableResource,
     pass
 
 
+class Watchlists(CreateableResource,
+                 UpdateableResource,
+                 ListableResource,
+                 RetrieveableResource):
+    pass
+
+
 class SamWatchlists(CreateableResource,
                     UpdateableResource,
                     ListableResource,
