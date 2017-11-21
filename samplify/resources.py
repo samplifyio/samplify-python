@@ -1,4 +1,9 @@
-import urllib, json, re
+import json, re
+
+try:
+    from urllib import quote_plus
+except ImportError:
+    from urllib.parse import quote_plus
 from samplify import api_requestor
 
 
@@ -16,7 +21,7 @@ class SamplifyResource(object):
     def get_object_url(cls):
         if cls == SamplifyResource:
             raise NotImplementedError('SamplifyResource is an abstract class.')
-        return '/%s/' % str(urllib.quote_plus(camelcase_to_dashcase(cls.__name__)))
+        return '/%s/' % str(quote_plus(camelcase_to_dashcase(cls.__name__)))
 
 
 class CreateableResource(SamplifyResource):
