@@ -9,7 +9,7 @@ def read(fname):
 
 setup(
     name="samplify-python",
-    version="0.0.7",
+    version="0.0.8",
     author="Samplify Limited",
     author_email="developers@samplify.io",
     description="Python wrapper for Samplify API",
