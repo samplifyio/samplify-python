@@ -80,4 +80,11 @@ class SlackUsers(RetrieveableResource):
 
 
 class SlackTeams(RetrieveableResource):
-    pass
+    @classmethod
+    def save_search_api_key(cls, oid, token, search_index, api_key):
+        url = "%s%s/save_search_key/" % (cls.get_object_url(), oid)
+        requestor = api_requestor.ApiRequestor(token=token)
+        return json.loads(requestor.put(url, {
+            'search_index': search_index,
+            'api_key': api_key
+        }).content)
