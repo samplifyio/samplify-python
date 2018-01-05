@@ -75,7 +75,8 @@ class SamWatchlists(CreateableResource,
     pass
 
 
-class SlackUsers(RetrieveableResource,
+class SlackUsers(CreateableResource,
+                 RetrieveableResource,
                  UpdateableResource):
     pass
 
