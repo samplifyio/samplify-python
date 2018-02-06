@@ -81,7 +81,8 @@ class SlackUsers(CreateableResource,
     pass
 
 
-class SlackTeams(RetrieveableResource):
+class SlackTeams(RetrieveableResource,
+                 UpdateableResource):
     @classmethod
     def save_search_api_key(cls, oid, token, search_index, api_key):
         url = "%s%s/save_search_key/" % (cls.get_object_url(), oid)
