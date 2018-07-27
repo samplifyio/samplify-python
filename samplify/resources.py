@@ -1,4 +1,5 @@
-import json, re
+import json
+import re
 
 try:
     from urllib import quote_plus
@@ -78,7 +79,11 @@ class SamWatchlists(CreateableResource,
 class SlackUsers(CreateableResource,
                  RetrieveableResource,
                  UpdateableResource):
-    pass
+    @classmethod
+    def get_all(cls, team_id, token):
+        url = "%s/all/?team_id=%s" % (cls.get_object_url(), team_id)
+        requestor = api_requestor.ApiRequestor(token=token)
+        return json.loads(requestor.get(url).content)
 
 
 class SlackTeams(RetrieveableResource,
