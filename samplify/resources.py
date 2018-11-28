@@ -96,3 +96,8 @@ class SlackTeams(RetrieveableResource,
             'search_index': search_index,
             'api_key': api_key
         }).content)
+
+
+class OneTimeTokens(CreateableResource,
+                    RetrieveableResource):
+    pass
