@@ -97,6 +97,14 @@ class SlackTeams(RetrieveableResource,
             'api_key': api_key
         }).content)
 
+    @classmethod
+    def get_by_domain(cls, token, domain):
+        url = "%sby_domain/" % (cls.get_object_url())
+        requestor = api_requestor.ApiRequestor(token=token)
+        return json.loads(requestor.post(url, {
+            'domain': domain
+        }).content)
+
 
 class OneTimeTokens(CreateableResource,
                     RetrieveableResource):
