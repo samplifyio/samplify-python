@@ -106,6 +106,11 @@ class SlackTeams(RetrieveableResource,
         }).content)
 
 
+class Organizations(RetrieveableResource,
+                    UpdateableResource):
+    pass
+
+
 class OneTimeTokens(CreateableResource,
                     RetrieveableResource):
     pass
