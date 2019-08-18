@@ -1,4 +1,4 @@
-api_base = 'https://samplify.io/api'
+api_base = 'https://deprecated-api.kipwise.com/api'
 api_version = 'v1'
 token = None
 
