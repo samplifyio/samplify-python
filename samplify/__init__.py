@@ -1,4 +1,4 @@
-api_base = 'https://deprecated-api.kipwise.com/api'
+api_base = 'http://34.207.8.15:8080/api'
 api_version = 'v1'
 token = None
 
